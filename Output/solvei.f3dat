@@ -1,0 +1,7 @@
+;----------------------------------
+;SOLVING INITIAL STATE
+;----------------------------------
+solve
+save initial
+ini xdisp=0 ydisp=0 zdisp=0
+ 

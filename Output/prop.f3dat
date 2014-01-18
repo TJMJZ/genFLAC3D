@@ -1,0 +1,8 @@
+;----------------------------------
+;INITIAL MATERIAL MODEL
+;----------------------------------
+model mech elas
+prop bulk 1000000000.0 shear 100000000.0
+prop bulk 4362745.1 shear 1141025.6 range z -1452.0 -1450.0
+prop bulk 294117.6 shear 134328.4 range z -1455.0 -1452.0
+prop bulk 4362745.1 shear 1141025.6 range z -1457.0 -1455.0
