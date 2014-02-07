@@ -31,6 +31,7 @@ delete('./Output/exc.f3dat')
 delete('./Output/solvef.f3dat')
 %% Create main.f3dat
 % main.f3dat will call all the fiels for the project
+copyfile('./FLAC3D_Template/*','./Output');
 diary('./Output/main.f3dat')
 diary on
 disp(sprintf('call gen.f3dat'))
