@@ -1,7 +1,0 @@
-;----------------------------------
-;CREATING HISTORY AND PLOT
-;----------------------------------
-hist nstep 10
-hist add unbal
-plot create view uBAL
- 

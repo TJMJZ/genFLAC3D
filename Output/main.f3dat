@@ -1,8 +1,0 @@
-call gen.f3dat
-call prop.f3dat
-call BC.f3dat
-call plots.f3dat
-call solvei.f3dat
-call exc.f3dat
-call solvef.f3dat
-;end main
