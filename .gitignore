@@ -1,2 +1,5 @@
 Output/
+*.xls
 *.mat
+*.m~
+*.asv
