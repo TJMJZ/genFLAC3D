@@ -9,5 +9,7 @@ disp(sprintf('hist add unbal'))
 disp(sprintf('plot create view uBAL'))
 disp(sprintf(' '));
 
+genPillarHistory();
+
 end
 
