@@ -5,9 +5,7 @@ load panelDataFile.mat
 load InitialDataFile.mat
 load LayerDataFile.mat
 
-copyfile('./FLAC3D_Template/*','./Output');
-diary('./Output/main.f3dat')
-diary on
+
 disp(sprintf(';**************************************************'));
 disp(sprintf(';Pillar without interface generator Ver 0.01'));
 disp(sprintf(';Author : Ali Soltani'));

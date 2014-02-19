@@ -3,7 +3,6 @@ load initialDataFile.mat
 load LayerDataFile.mat
 load panelDataFile.mat
 
-diary('./Output/BC.f3dat')
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';SET GRAVITY'));
 disp(sprintf(';----------------------------------'));

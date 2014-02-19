@@ -1,11 +1,11 @@
-function createProperties()
+function createProperties1()
 
 % BOUNDRY CONDITION
 %apply material prop
 load initialDataFile.mat
 load LayerDataFile.mat
 
-diary('./Output/prop.f3dat')
+
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';INITIAL MATERIAL MODEL'));
 disp(sprintf(';----------------------------------'));

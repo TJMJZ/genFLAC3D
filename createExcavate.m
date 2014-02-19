@@ -7,7 +7,6 @@ function createExcavate()
     EH = coalLayerThickness;
     coalDepth = coalLayerDepth;
     
-    diary('./Output/exc.f3dat')    
     disp(sprintf(';----------------------------------'));
     disp(sprintf(';EXCAVATE ENTRIES AND CROSSCUTS'));
     disp(sprintf(';----------------------------------'));

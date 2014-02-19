@@ -11,21 +11,31 @@ load panelDataFile.mat
 
 clearOldFiles();                        %clear old files
 
+diary on
+diary('./Output/main.f3dat')
 createMain();                           %create main.f3dat
 
+diary('./Output/gen.f3dat')
 createLayer();                          %generate layers
 createInterface();                      %generate interface between layers
 
+diary('./Output/prop.f3dat')
 createProperties1();                    %apply initial properties to layers
 createBC();                             %apply boun
 
+diary('./Output/BC.f3dat')
 createPlot();                           % create plots and history
 
+diary('./Output/solvei.f3dat')
 createSolve1();                         % Initial Solve
 createResult1();                        %write results to table files
 
+diary('./Output/exc.f3dat') 
 createExcavate();                       %Room and Pillar Excavation
 createProperties2();                    %apply properties to layers after excavation
 
+diary('./Output/solvef.f3dat')  
 createSolve2();                         %Second Solve
 createResult2();                        %write results to table files
+
+diary off

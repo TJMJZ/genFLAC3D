@@ -1,6 +1,5 @@
 function  importLayers()
 % Importing layers data
-diary off;
 % Layers.xls "    'Layer Type',Litohology,Depth,Thickness'"
 inputLayer = importdata('./Data/layers.xls');
 %[row,col]=size(inputLayer.data);

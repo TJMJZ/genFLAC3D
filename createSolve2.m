@@ -1,5 +1,5 @@
 function createSolve2()
-diary('./Output/solvef.f3dat')  
+ 
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';SOLVING EXCAVATION STATE'));
 disp(sprintf(';----------------------------------'));

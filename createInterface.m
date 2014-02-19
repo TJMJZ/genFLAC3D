@@ -1,7 +1,5 @@
 function createInterface()
 % CREATE LAYERS
-diary('./Output/gen.f3dat')
-diary on
 
 load LayerDataFile
 load panelDataFile

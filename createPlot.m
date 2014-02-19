@@ -1,6 +1,5 @@
 function createPlot()
 
-diary('./Output/plots.f3dat')
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';CREATING HISTORY AND PLOT'));
 disp(sprintf(';----------------------------------'));

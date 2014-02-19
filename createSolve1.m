@@ -1,5 +1,5 @@
 function createSolve1()
-diary('./Output/solvei.f3dat')
+
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';SOLVING INITIAL STATE'));
 disp(sprintf(';----------------------------------'));
