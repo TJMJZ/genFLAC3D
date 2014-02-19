@@ -1,4 +1,4 @@
-function [X,Y,Z]=excRange(pX,pY,excX,excY,excZ)
+function [X,Y,Z]=excavateRange(pX,pY,excX,excY,excZ)
   % X(1)->X(4) for entry
   %X(5)->X(8) for crosscut
   X = [pX(1)   excX(1) excX(2) pX(2)   excX(2) excX(1) excX(2) excX(1)];

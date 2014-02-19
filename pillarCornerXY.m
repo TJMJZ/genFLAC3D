@@ -1,4 +1,4 @@
-function [x,y]=pillarXY(c,entryWitdh,entrySpacing,crosscutSpacing)
+function [x,y]=pillarCornerXY(c,entryWitdh,entrySpacing,crosscutSpacing)
 %Inputs:
 % c = pillar center coordinate [X,Y]
 

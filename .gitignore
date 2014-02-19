@@ -3,3 +3,11 @@ Output/
 *.mat
 *.m~
 *.asv
+
+InitialDataFile.mat
+
+LayerDataFile.mat
+
+panelDataFile.mat
+
+panelDataFile.mat

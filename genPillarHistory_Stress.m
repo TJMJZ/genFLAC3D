@@ -1,17 +1,34 @@
-function genPillarHistory_Stress()
-disp(sprintf(';--> PILLAR (5) STRESS'));
-disp(sprintf('def stress_5'));
-disp(sprintf('  sum=0.0'));
-disp(sprintf('  loop m (0,5)'));
-disp(sprintf('      x=85.25+m*0.5'));
-disp(sprintf('      loop n (0,1)'));
-disp(sprintf('          y=0.25+m*0.5'));
-disp(sprintf('          local pnt = z_near(x,y,2.25)'));
-disp(sprintf('          sum=sum+z_szz(pnt)'));
+function genPillarHistory_Stress(i,pX,pY,pZ)
+
+load('InitialDataFile.mat','mainMesh');
+
+meshInX = mainMesh(1,1);
+meshInY = mainMesh(1,3);
+
+minX = min(pX);
+minY = min(pY);
+
+maxX = max(pX);
+maxY = max(pY);
+pZ = pZ(1);
+
+meshSizeX = (maxX - minX)/meshInX;
+meshSizeY = (maxY - minY)/meshInY;
+
+disp(sprintf(' '));
+disp(sprintf(';---------------------> PILLAR (%i) STRESS',i));
+disp(sprintf('def stress_%i',i));
+disp(sprintf('  local sumSZZ=0.0'));
+disp(sprintf('  loop mX (0,%i)',meshInX+1));
+disp(sprintf('      local x = %2.1f + mX * %2.1f ',minX,meshSizeX));
+disp(sprintf('      loop nX (0,%i)',meshInY+1));
+disp(sprintf('          local y = %2.1f + nX * %2.1f ',minY,meshSizeY));
+disp(sprintf('          local pnt = z_near(x,y,%2.1f)',pZ));
+disp(sprintf('          sumZZ = sumZZ + z_szz(pnt)'));
 disp(sprintf('      end_loop'));
 disp(sprintf('  end_loop'));
-disp(sprintf('  stress_5=(abs(sum)/(6*2))/144'));
+disp(sprintf('  stress_%i=(abs(sumZZ)/((%i*%i)*144)',i,meshSizeX,meshSizeY));
 disp(sprintf('end'));
-disp(sprintf('@stress_5'));
+disp(sprintf('@stress_%i',i));
 disp(sprintf(' '));
 end

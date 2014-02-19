@@ -4,32 +4,18 @@ function createExcavate()
     load panelDataFile.mat
     nC = pillarInCol;
     nR = pillarInRow;
+    numberOfPillar = nC * nR;
     EH = coalLayerThickness;
     coalDepth = coalLayerDepth;
     
     disp(sprintf(';----------------------------------'));
     disp(sprintf(';EXCAVATE ENTRIES AND CROSSCUTS'));
     disp(sprintf(';----------------------------------'));
-    numberOfPillar = nR*nC;
-    xmin = -panelX+EW/2 + pEW/2;
-    ymin = -panelY+EW/2 + pCW/2;
-    sX   = EW + pEW;
-    sY   = EW + pCW;
-    for i=1:nR
-        for j=1:nC
-            C1=xmin+i*sX;
-            C2=ymin+j*sY;
-            C3=0;
-            if (i == 1 && j ==1)
-                C = [C1 C2 C3];
-            else
-                C = [C;C1 C2 C3];
-            end
-        end
-    end
+    
+    C = pillarCentroidXYZ();
     
     for i=1:numberOfPillar
-    [pX,pY]=pillarXY(C(i,:),EW,EC,XC);
+    [pX,pY]=pillarCornerXY(C(i,:),EW,EC,XC);
     [excX,excY,excZ]=excavateXYZ(pX,pY,EW,EH,coalDepth);
     [X,Y,Z]=excavateRange(pX,pY,excX,excY,excZ);
     diary('./Output/exc.f3dat')
