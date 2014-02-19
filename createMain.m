@@ -1,23 +1,33 @@
 function createMain()
 %% Create main.f3dat
 % main.f3dat will call all the fiels for the project
+load panelDataFile.mat
+load InitialDataFile.mat
+load LayerDataFile.mat
+
 copyfile('./FLAC3D_Template/*','./Output');
 diary('./Output/main.f3dat')
 diary on
-disp(sprintf(';--------------------------------------------------'));
+disp(sprintf(';**************************************************'));
 disp(sprintf(';Pillar without interface generator Ver 0.01'));
 disp(sprintf(';Author : Ali Soltani'));
-disp(sprintf(' '));
-disp(sprintf(' '));
+disp(sprintf(';Generated %s',date()));
+disp(sprintf(';**************************************************'));
+disp(sprintf(';Layers imported :'));
+disp(sprintf(';'));
 disp(sprintf(';------------------ INITIAL VALUES ----------------'));
-disp(sprintf('; Number of pillar in X : '));
-disp(sprintf('; Number of pillar in Y :'));
-disp(sprintf(' '));
-disp(sprintf(' '));
+disp(sprintf('; Number of pillar in X : %i ',pillarInRow));
+disp(sprintf('; Number of pillar in Y : %i ',pillarInCol));
+disp(sprintf('; '));
+disp(sprintf('; '));
 disp(sprintf(';-------------- PILLAR/PANEL DIM ------------------'));
-disp(sprintf('; Entry Width : '));
-disp(sprintf('; Pillar X :               (width in entry)  '));
-disp(sprintf('; Pillar Y :               (width in cross-section) '));
+disp(sprintf('; Entry Width :   %2.1f ',EW));
+disp(sprintf('; Pillar X :      %2.1f      (width across entry)',pEW));
+disp(sprintf('; Pillar Y :      %2.1f      (width across cross-section)',pCW));
+disp(sprintf('; '));
+disp(sprintf('; Panel  X :      %2.1f      ',panelX));
+disp(sprintf('; Panel  Y :      %2.1f      ',panelY));
+disp(sprintf('; PanelMulti :    %2.1f      ',panelMulti));
 disp(sprintf(';--------------------------------------------------'));
 disp(sprintf(' '));
 disp(sprintf('new project'));
