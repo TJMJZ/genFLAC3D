@@ -1,4 +1,4 @@
-function excavatePillar()
+function createExcavate()
     load initialDataFile.mat
     load LayerDataFile.mat
     load panelDataFile.mat
