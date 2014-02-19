@@ -10,7 +10,7 @@ function  genInterfaceLayer( layerDepth,panelX,PanelY,...
     X2=XYZ(3,1);Y2=XYZ(3,2);Z2=XYZ(3,3);
     X3=XYZ(4,1);Y3=XYZ(4,2);Z3=XYZ(4,3);
     
-    diary('gen.dat')
+    diary('./Output/gen.f3dat')
     diary on
     disp(sprintf(' '));
     disp(sprintf(';----------------------------------'));
