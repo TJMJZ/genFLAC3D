@@ -27,7 +27,7 @@ disp(sprintf('          local pnt = z_near(x,y,%2.1f)',pZ));
 disp(sprintf('          sumZZ = sumZZ + z_szz(pnt)'));
 disp(sprintf('      end_loop'));
 disp(sprintf('  end_loop'));
-disp(sprintf('  stress_%i=(abs(sumZZ)/((%i*%i)*144)',i,meshSizeX,meshSizeY));
+disp(sprintf('  stress_%i=(abs(sumZZ)/((%i*%i)*144))',i,meshSizeX,meshSizeY));
 disp(sprintf('end'));
 disp(sprintf('@stress_%i',i));
 disp(sprintf(' '));

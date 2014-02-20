@@ -1,4 +1,5 @@
 function genPillarHistory_Stain(i,pX,pY,pZt,pZb)
+
 load('InitialDataFile.mat','mainMesh');
 
 meshInX = mainMesh(1,1);
@@ -27,8 +28,8 @@ disp(sprintf('          sumZdisp1 = sumZdisp1 + gp_zdisp(pnt1)'));
 disp(sprintf('          sumZdisp2 = sumZdisp2 + gp_zdisp(pnt2)'));
 disp(sprintf('      end_loop'));
 disp(sprintf('  end_loop'));
-disp(sprintf('  strain_%i=abs((sumZdisp1-sumZdisp2)/((pZt-pZb)*%i*i) )',i,meshInX,meshInY));
+disp(sprintf('  strain_%i=abs((sumZdisp1-sumZdisp2)/((%2.1f-(%2.1f))*%i*%i))',i,pZt,pZb,meshInX,meshInY));
 disp(sprintf('end'));
-disp(sprintf('@strain_5'));
+disp(sprintf('@strain_%i',i));
 disp(sprintf(' '));
 end

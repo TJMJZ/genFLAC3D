@@ -1,7 +1,7 @@
 function createMain()
 %% Create main.f3dat
 % main.f3dat will call all the fiels for the project
-load panelDataFile.mat
+load PanelDataFile.mat
 load InitialDataFile.mat
 load LayerDataFile.mat
 
@@ -32,12 +32,33 @@ disp(sprintf('new project'));
 %disp(sprintf('title '%s' ',title)); Error in FLAC3d ' not the same char 
 disp(sprintf(' '));
 disp(sprintf('call gen.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf('call prop.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf('call BC.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf('call plots.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf('call solvei.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf('call exc.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf('call solvef.f3dat'))
+if myDebug == 1 
+disp(sprintf('pause'))
+end
 disp(sprintf(';end main'))
 
 diary('./Output/gen.f3dat')
