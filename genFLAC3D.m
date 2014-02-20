@@ -9,6 +9,11 @@ load layerDataFile.mat
 importPanel();                          % imports panel data
 load panelDataFile.mat
 
+numError = importCkecker();
+if numError~=0
+    error('ERROR FOUND IN INPUTS !'); 
+end
+
 clearOldFiles();                        %clear old files
 
 diary on
