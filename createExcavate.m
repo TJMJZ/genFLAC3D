@@ -38,5 +38,20 @@ function createExcavate()
     
     end
  
- disp(sprintf(';model mech null range group zonk'));
+ disp(sprintf('model mech null range group zonk'));
+end
+
+function [X,Y,Z]=excavateRange(pX,pY,excX,excY,excZ)
+  % X(1)->X(4) for entry
+  %X(5)->X(8) for crosscut
+  X = [pX(1)   excX(1) excX(2) pX(2)   excX(2) excX(1) excX(2) excX(1)];
+  Y = [excY(4) excY(1) excY(4) excY(1) pY(1)   excY(1) excY(4) pY(4)];
+  Z = [excZ(2) excZ(1) excZ(2) excZ(1) excZ(2) excZ(1) excZ(2) excZ(1)];
+end
+
+function [excX,excY,excZ]=excavateXYZ(pX,pY,EW,EH,coalDepth)
+scale = EW/2;
+excX = [ pX(1) + scale ; pX(2)-scale ; pX(3)-scale; pX(4)+scale];
+excY = [ pY(1) + scale ; pY(2)+scale ; pY(3)-scale; pY(4)-scale];
+excZ = [ coalDepth ;coalDepth-EH];
 end

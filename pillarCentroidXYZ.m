@@ -12,12 +12,12 @@ function C = pillarCentroidXYZ()
     ymin = -panelY+EW/2 + pCW/2;
     sX   = EW + pEW;
     sY   = EW + pCW;
-    for i=1:nR
-        for j=1:nC
+    for i=0:nR-1
+        for j=0:nC-1
             C1=xmin+i*sX;
             C2=ymin+j*sY;
             
-            if (i == 1 && j ==1)
+            if (i == 0 && j ==0)
                 C = [C1 C2 CZ];
             else
                 C = [C;C1 C2 CZ];

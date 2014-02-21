@@ -6,11 +6,6 @@ pillarInCol       = 2;
 density     = 162;
 poisson     = 0.2;
 
-layerMesh   =[10 4 10 4];
-mainMesh    =[10 5 10 4];
-
-layerRatio  = [1 1.2 1 1.2];
-mainRatio   = [1 1.2 1 1.2];
 
 panelMulti  = 1;
 dBulk=1e9;
@@ -22,7 +17,21 @@ dFric=0;
 myDebug = 0;
 
 % brick, radtunnel
-genType = 'radtunnel2';
+%genType = 'radtunnel';
+genType = 'brick';
+
+if strcmp(genType,'radtunnel')
+layerMesh   =[10 4 10 4];    
+mainMesh    =[10 4 10 4];     
+
+layerRatio  = [1 1.2 1 1.2];       
+mainRatio   = [1 1.2 1 1.2];       
+elseif strcmp(genType,'brick')
+layerMesh   =[10 10 3];     
+mainMesh    =[10 10 3];     
+layerRatio  = [1 1 1];       
+mainRatio   = [1 1 1];      
+end
 
 save('InitialDataFile');
 

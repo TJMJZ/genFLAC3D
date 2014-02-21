@@ -11,8 +11,8 @@ XC         = inputPanel.data(2,3); %crosscut spacing
 EW         = inputPanel.data(3,3); %entry width
 pEW        = inputPanel.data(4,3); %pillar size in entry
 pCW        = inputPanel.data(5,3); %pillar size in crosscut
-panelX      = pillarInRow*(EW + pEW); 
-panelY      = pillarInCol*(EW + pCW);
+panelX      = pillarInRow*(EW + pEW)/2; 
+panelY      = pillarInCol*(EW + pCW)/2;
 panelMax    = max(panelX,panelY);
 clearvars inputPanel;
 save('PanelDataFile');

@@ -10,22 +10,27 @@ importPanel();                          % imports panel data
 load panelDataFile.mat
 
 numError = importCkecker();
+
 if numError~=0
     error('ERROR FOUND IN INPUTS !'); 
 end
 
 clearOldFiles();                        %clear old files
 
-diary on
+
 diary('./Output/main.f3dat')
+diary on
+
 createMain();                           %create main.f3dat
 
 diary('./Output/gen.f3dat')
 createLayer();                          %generate layers
-%createInterface();                      %generate interface between layers
+
+%createInterface();                     %generate interface between layers
 
 diary('./Output/prop.f3dat')
-createProperties1();                    %apply initial properties to layers
+createProperties(1);                    %apply initial properties to layers
+
 diary('./Output/BC.f3dat')
 createBC();                             %apply boun
 
@@ -33,16 +38,18 @@ diary('./Output/plots.f3dat')
 createPlot();                           % create plots and history
 
 diary('./Output/solvei.f3dat')
-createSolve1();                         % Initial Solve
-createResult1();                        %write results to table files
+createSolve(1,2000);                         % Initial Solve
+
+createResult(1);                        %write results to table files
 
 diary('./Output/exc.f3dat') 
-createProperties2();                    %apply properties to layers after excavation
+createProperties(2);                    %apply properties to layers after excavation
+
 createExcavate();                       %Room and Pillar Excavation
 
-
 diary('./Output/solvef.f3dat')  
-createSolve2();                         %Second Solve
-createResult2();                        %write results to table files
+createSolve(2,2000);                         %Second Solve
+
+createResult(2);                        %write results to table files
 
 diary off
