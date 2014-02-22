@@ -9,7 +9,7 @@ load layerDataFile.mat
 importPanel();                          % imports panel data
 load panelDataFile.mat
 
-numError = importCkecker();
+numError = importChecker();
 
 if numError~=0
     error('ERROR FOUND IN INPUTS !'); 
@@ -24,9 +24,7 @@ diary on
 createMain();                           %create main.f3dat
 
 diary('./Output/gen.f3dat')
-createLayer();                          %generate layers
-
-%createInterface();                     %generate interface between layers
+createLayer();                          %generate layers and interface
 
 diary('./Output/prop.f3dat')
 createProperties(1);                    %apply initial properties to layers

@@ -6,38 +6,87 @@ load panelDataFile
 load initialDataFile
 
 rockLayerCounter    = 0;
-interfaceLayerCount  = 0;
+interfaceCount  = 0;
+interfaceFlag = 0;
 %GENERATE MAIN ROOF LAYERS
 
 mainRoof  = [lDepth(1),max(panelX,panelY)*panelMulti];   %,'mainRoof',0]
 genLayer(mainRoof(1),mainRoof(2),panelX,panelY,panelMulti,...
     mainMesh,mainRatio,'mainRoof',0,genType)
+disp(sprintf(';only way to make z ratio be applied correctly'))
 disp(sprintf('gen zone reflect origin 0,0,%2.1f normal 0,0,-1',mainRoof(1)))
 disp(sprintf('del zone range z %2.1f %2.1f',mainRoof(1),mainRoof(1)-panelMulti*max(panelX,panelY)));
 
 %GENERATE ROCK LAYERS
 for i=1:size(lType,1)
     if lType(i) == 1
+        if interfaceFlag == 0
         rockLayerCounter = rockLayerCounter +1;
         genLayer(lDepth(i),lThickness(i),panelX,panelY,panelMulti,...
             layerMesh,layerRatio,cell2mat(lName(i)),rockLayerCounter,genType);
+        elseif interfaceFlag ==1
+            disp(sprintf(';->layer created -10 below interface'))
+            rockLayerCounter = rockLayerCounter +1;
+            genLayer(lDepth(i)-10,lThickness(i),panelX,panelY,panelMulti,...
+                layerMesh,layerRatio,cell2mat(lName(i)),rockLayerCounter,genType);
+            disp(sprintf(';move layer up toward interface'))
+            disp(sprintf('ini z add 10 range z %2.1f %2.1f ',lDepth(i)-10+0.1,lDepth(i)-10-0.1))
+            interfaceFlag = 0;
+        end
     else if lType(i) == 2
-            %interfaceLayerCount = interfaceLayerCount +1;
-            %genInterfaceLayer(lDepth(i),panelX,panelY,...
-            %lPar1(i),lPar2(i),lPar3(i),lPar4(i),lPar5(i),cell2mat(lName(i)),...
-            %interfaceLayerCount);
+            interfaceFlag = 1;
+            interfaceCount = interfaceCount +1;
+            genInterfaceLayer(lDepth(i),panelX,panelY,...
+                lPar1(i),lPar2(i),lPar3(i),lPar4(i),lPar5(i),cell2mat(lName(i)),...
+                interfaceCount);
         end
     end
 end
+if interfaceFlag == 0
 %GENERATE MAIN FLOOR LAYERS
-mainFloor = [lDepth(end),max(panelX,panelY)*panelMulti,panelX,panelY]; %,'mainFloor',0]
-genLayer(mainFloor(1),mainFloor(2),mainFloor(3),mainFloor(4),panelMulti,...
-    mainMesh,mainRatio,'mainFloor',0,genType)
-
+    mainFloor = [lDepth(end),max(panelX,panelY)*panelMulti,panelX,panelY]; %,'mainFloor',0]
+        genLayer(mainFloor(1),mainFloor(2),mainFloor(3),mainFloor(4),panelMulti,...
+            mainMesh,mainRatio,'mainFloor',0,genType)
+elseif interfaceFlag == 1
+    disp(sprintf(';->layer created -10 below interface'))
+    mainFloor = [lDepth(end)-10,max(panelX,panelY)*panelMulti,panelX,panelY]; %,'mainFloor',0]
+        genLayer(mainFloor(1),mainFloor(2),mainFloor(3),mainFloor(4),panelMulti,...
+        mainMesh,mainRatio,'mainFloor',0,genType)
+    disp(sprintf(';move layer up toward interface'))
+    disp(sprintf('ini z add 10 range z %2.1f %2.1f ',lDepth(end)-10+0.1,lDepth(end)-10-0.1))
+    interfaceFlag = 0;
+end
 %GENERATE REFLECTION (X and Y)
 disp(sprintf('gen zone reflect origin 0,0,0 normal 0,-1,0'));
 disp(sprintf('gen zone reflect origin 0,0,0 normal -1,0,0'));
-end
+
+
+disp(sprintf(';FISH to loop through all gridpoints on interfaces and replace with cohesion/friction functions'));
+
+disp(sprintf(';def intprop'));
+disp(sprintf(';while_stepping'));
+disp(sprintf(';local _i = i_head'));
+disp(sprintf(';loop while _i # null ; loop through all interfaces'));
+disp(sprintf(';  local _in = i_node_head(_i)'));
+disp(sprintf(';  loop while _in # null ; loop through all nodes on this interface'));
+disp(sprintf(';local _nstress = in_nstr(_in) ; see page 2-99 FISH Reference'));
+disp(sprintf(';if _nstress < = 72000  then'));
+disp(sprintf(';        in_prop(_in, ''cohesion'') = 21600'));
+disp(sprintf(';        in_prop(_in, ''friction'') = 20'));
+disp(sprintf(';endif'));
+disp(sprintf(';if _nstress > 72000  then'));
+disp(sprintf(';    in_prop(_in, ''cohesion'')= 47805.86'));
+disp(sprintf(';    in_prop(_in, ''friction'')= 0'))
+disp(sprintf(';endif'));
+disp(sprintf(';    _in = in_next(_in)'));
+disp(sprintf(';  endloop'));
+disp(sprintf(';  _i = i_next(_i)'));
+disp(sprintf(';endloop'));
+disp(sprintf(';end'));
+end %function creareLayer()
+
+
+
 
 function  genLayer(layerDepth,layerThickness,panelX,panelY,panelMulti,...
                 layerMesh,layerRatio,layerName,layerNumber,genType)
@@ -54,7 +103,6 @@ function  genLayer(layerDepth,layerThickness,panelX,panelY,panelMulti,...
     X2=XYZ(3,1);Y2=XYZ(3,2);Z2=XYZ(3,3);
     X3=XYZ(4,1);Y3=XYZ(4,2);Z3=XYZ(4,3);
     
-    disp(sprintf(' '));
     disp(sprintf(';----------------------------------'));
     disp(sprintf(';;GENERATING LAYER %s (%i)',layerName,layerNumber));
     disp(sprintf(';----------------------------------'));
@@ -127,3 +175,33 @@ end
 
 
 end
+
+
+function  genInterfaceLayer( layerDepth,panelX,PanelY,...
+                lPar1,lPar2,lPar3,lPar4,lPar5,layerName,layerNumber)
+%Generates Interface Layer in layerDepth 
+%   Detailed explanation goes here
+
+ 
+    
+    diary('./Output/gen.f3dat')
+    diary on
+    disp(sprintf(' '));
+    disp(sprintf(';----------------------------------'));
+    disp(sprintf(';;GENERATING INTERFACE LAYER %s (%i) ',layerName,layerNumber));
+    disp(sprintf(';----------------------------------'));
+    %P = sum(lPar1,lPar2,lPar3,lPar4,lPar5)
+    %disp(sprintf('group layer%.0f fill group layer%.0f',layerNumber,layerNumber));
+    %disp(sprintf('gen zone reflect origin 0,0,0 normal -1,0,0 range group layer%.0f',layerNumber));
+    disp(sprintf('interface %i face range plane norm (0,0,-1) origin (0,0,%2.1f) dist 0.1',...
+        layerNumber,layerDepth));
+    disp(sprintf('interface %i prop kn %2.1f ks %2.1f tens %2.1f cohesion %2.1f friction %2.1f',layerNumber,lPar1,lPar2,lPar3,lPar4,lPar5));
+    disp(sprintf('interface %i effective=off',layerNumber));
+   
+    disp(sprintf(' '));
+end
+
+
+
+
+

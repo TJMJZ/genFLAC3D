@@ -1,4 +1,4 @@
-function numError = importCkecker()
+function numError = importChecker()
 numError = 0;
 % This function checks imported data and does not let program continue
 % if there is an input error present
