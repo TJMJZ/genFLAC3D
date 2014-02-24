@@ -5,16 +5,17 @@ inputLayer = importdata('./Data/layers.xls');
 %[row,col]=size(inputLayer.data);
  %Error checking (check column 
  %clearvars col
-lName      = inputLayer.textdata([2:end],2); 
-
 lType       = inputLayer.data(:,1);
+lName      = inputLayer.textdata([2:end],2); 
+lRockType   = inputLayer.data(:,3);
 lThickness  = inputLayer.data(:,4);
 lDepth      = inputLayer.data(:,5);
-lPar1       = inputLayer.data(:,6);  %Bulk / KN
-lPar2       = inputLayer.data(:,7);  %Shear / KS
-lPar3       = inputLayer.data(:,8);  %Tens / tebs
-lPar4       = inputLayer.data(:,9);  % coh / coh
-lPar5       = inputLayer.data(:,10); % fric / fric
+lMechType   = inputLayer.data(:,6);
+lPar1       = inputLayer.data(:,7);  %Bulk / KN
+lPar2       = inputLayer.data(:,8);  %Shear / KS
+lPar3       = inputLayer.data(:,9);  %Tens / tebs
+lPar4       = inputLayer.data(:,10);  % coh / coh
+lPar5       = inputLayer.data(:,11); % fric / fric
 
 % FINDING COAL LAYAER
 for i=1:size(lName,1)
