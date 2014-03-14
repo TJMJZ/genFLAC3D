@@ -36,7 +36,7 @@ diary('./Output/plots.f3dat')
 createPlot();                           % create plots and history
 
 diary('./Output/solvei.f3dat')
-createSolve(1,2000);                         % Initial Solve
+createSolve(1,2000);                    % Initial Solve
 
 createResult(1);                        %write results to table files
 
@@ -46,7 +46,7 @@ createProperties(2);                    %apply properties to layers after excava
 createExcavate();                       %Room and Pillar Excavation
 
 diary('./Output/solvef.f3dat')  
-createSolve(2,2000);                         %Second Solve
+createSolve(2,2000);                    %Second Solve
 
 createResult(2);                        %write results to table files
 

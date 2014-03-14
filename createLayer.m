@@ -1,30 +1,42 @@
 function createLayer()
-% CREATE LAYERS
+% other functions 
+% genLayer(layerDepth,layerThickness,panelX,panelY,panelMulti,layerMesh,layerRatio,layerName,layerNumber,genType)
 
 load LayerDataFile
 load panelDataFile
 load initialDataFile
+
+% CREATE LAYERS
+disp(sprintf(' '));
 disp(sprintf(';>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> '));
 disp(sprintf(';>>>>>>>>>>>>>>>>>ROCK LAYERS >>>>>>>>>>>>>>>>>> '));
 disp(sprintf(';>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> '));
 rockLayerCounter    = 0;
 interfaceCount  = 0;
-%GENERATE MAIN ROOF LAYERS
 
-mainRoof  = [lDepth(1),max(panelX,panelY)*panelMulti];   %,'mainRoof',0]
-genLayer(mainRoof(1),mainRoof(2),panelX,panelY,panelMulti,...
-    mainMesh,mainRatio,'mainRoof',0,genType)
-disp(sprintf(';only way to make z ratio be applied correctly'))
+%GENERATE MAIN ROOF LAYERS
+if lThickness(1) <= 0 
+    mainRoof  = [lDepth(1),max(panelX,panelY)*panelMulti];
+else 
+    mainRoof  = [lDepth(1),lThickness(1)];
+end
+
+genLayer(mainRoof(1),mainRoof(2),panelX,panelY,panelMulti,mainMesh,mainRatio,'mainRoof',0,genType)
+
+%Reflecting Model
+disp(sprintf(';only way to make z ratio be applied correctly')) 
+disp(sprintf(';z ratio can be disabled in layerRatio in Initial Parameters'))
 disp(sprintf('gen zone reflect origin 0,0,%2.1f normal 0,0,-1',mainRoof(1)))
 disp(sprintf('del zone range z %2.1f %2.1f',mainRoof(1),mainRoof(1)-panelMulti*max(panelX,panelY)));
 disp(sprintf(' '));
+
+
 %GENERATE ROCK LAYERS
 for i=1:size(lType,1)
     if lType(i) == 1
         rockLayerCounter = rockLayerCounter +1;
         disp(sprintf(';layer creater -%i below actual',rockLayerCounter));
-        genLayer(lDepth(i)-rockLayerCounter,lThickness(i),panelX,panelY,panelMulti,...
-            layerMesh,layerRatio,cell2mat(lName(i)),rockLayerCounter,genType);   
+        genLayer(lDepth(i)-rockLayerCounter,lThickness(i),panelX,panelY,panelMulti,layerMesh,layerRatio,cell2mat(lName(i)),rockLayerCounter,genType);   
     else if lType(i) == 2
         %donothing
         end
@@ -34,9 +46,12 @@ end
 %GENERATE MAIN FLOOR LAYERS
 rockLayerCounter = rockLayerCounter +1;
 disp(sprintf(';layer creater -%i below actual',rockLayerCounter));
-mainFloor = [lDepth(end)-rockLayerCounter,max(panelX,panelY)*panelMulti,panelX,panelY]; %,'mainFloor',0]
-genLayer(mainFloor(1),mainFloor(2),mainFloor(3),mainFloor(4),panelMulti,...
-            mainMesh,mainRatio,'mainFloor',0,genType)
+if lThickness(end) <= 0
+    mainFloor = [lDepth(end)-rockLayerCounter,max(panelX,panelY)*panelMulti,panelX,panelY]; 
+else 
+    mainFloor = [lDepth(end)-rockLayerCounter,lTickness(end),panelX,panelY]; 
+end
+genLayer(mainFloor(1),mainFloor(2),mainFloor(3),mainFloor(4),panelMulti,mainMesh,mainRatio,'mainFloor',0,genType)
 
 %GENERATE REFLECTION (X and Y)
 disp(sprintf('gen zone reflect origin 0,0,0 normal 0,-1,0'));
@@ -54,7 +69,7 @@ interfaceCount  = 0;
 for i=1:size(lType,1)
     if lType(i) == 1
         rockLayerCounter = rockLayerCounter +1;
-        disp(sprintf(';layer  was creater -%i below actual moving back up',rockLayerCounter));
+        disp(sprintf(';LAYER WAS CREATED  -%i BELOW ACTUAL DEPTH',rockLayerCounter));
         disp(sprintf('ini z add %i range z %2.1f %2.1f ',rockLayerCounter,lDepth(i)-rockLayerCounter+0.1,lDepth(i)-rockLayerCounter-lThickness(i)-0.1))
     else if lType(i) == 2
             interfaceCount = interfaceCount +1;
@@ -64,9 +79,9 @@ for i=1:size(lType,1)
     end
 end
 
-%GENERATE MAIN FLOOR LAYERS
+%GENERATE MAIN FLOOR INTERFACE
 rockLayerCounter = rockLayerCounter +1;
-disp(sprintf(';MOVING MAIN FLOOR - was creater -%i below actual',rockLayerCounter));
+disp(sprintf(';MOVING MAIN FLOOR - WAS CREATED -%i BELOW ACTUAL DEPTH',rockLayerCounter));
 disp(sprintf('ini z add %i range z %2.1f %2.1f ',rockLayerCounter,lDepth(end)-rockLayerCounter+0.1,lDepth(end)-rockLayerCounter-mainFloor(2)-0.1))
 
 disp(sprintf(' '));

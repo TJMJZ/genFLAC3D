@@ -4,3 +4,5 @@ Output/
 *.m~
 *.asv
 *.swp
+myVimLog
+tags
