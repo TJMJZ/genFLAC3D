@@ -1,6 +1,7 @@
 *.mat
 *.m~
 *.asv
+<<<<<<< HEAD
 *.swp
 myVimLog
 tags
@@ -8,3 +9,15 @@ Output/*.f3dat
 Output/*.f3prj
 Output/*.f3fis
 Data/.DS_Store
+=======
+
+InitialDataFile.mat
+
+LayerDataFile.mat
+
+panelDataFile.mat
+
+panelDataFile.mat
+
+*.swp
+>>>>>>> refs/heads/GUI---Room&Pillar
