@@ -17,37 +17,41 @@ end
 
 clearOldFiles();                        %clear old files
 
-
-diary('./Output/main.f3dat')
-diary on
-
 createMain();                           %create main.f3dat
 
-diary('./Output/gen.f3dat')
+
+%if outputType == 0
+
+%else
+%diary('./Output/single.f3dat')
+%end
+
+%gen.3fdat
 createLayer();                          %generate layers and interface
 
-diary('./Output/prop.f3dat')
+%prop.3fdat
 createProperties(1);                    %apply initial properties to layers
 
-diary('./Output/BC.f3dat')
+%BC.3fdat
 createBC();                             %apply boun
 
-diary('./Output/plots.f3dat')
+
+%plot.3fdat
 createPlot();                           % create plots and history
 
-diary('./Output/solvei.f3dat')
-createSolve(1,2000);                    % Initial Solve
 
+
+%solvei.3fdat
+createSolve(1);                    % Initial Solve
 createResult(1);                        %write results to table files
 
-diary('./Output/exc.f3dat') 
+
+%exc.3fdat
+createExcavate();                       %Room and Pillar Excavation
 createProperties(2);                    %apply properties to layers after excavation
 
-createExcavate();                       %Room and Pillar Excavation
-
-diary('./Output/solvef.f3dat')  
-createSolve(2,2000);                    %Second Solve
-
+%solvef.3fdat
+createSolve(2);                    %Second Solve
 createResult(2);                        %write results to table files
 
 diary off

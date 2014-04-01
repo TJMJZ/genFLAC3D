@@ -1,24 +1,21 @@
 function importInitial()
 % Initial Values
-pillarInRow       = 2;
-pillarInCol       = 2;
+inputLayer = importdata('./Data/input.xls');
+%[row,col]=size(inputLayer.data);
+ %Error checking (check column 
+ %clearvars col
+pillarInRow     = inputLayer.data.Adv(1,2);     
+pillarInCol     = inputLayer.data.Adv(2,2); 
+density         = inputLayer.data.Adv(3,2);  
+poisson         = inputLayer.data.Adv(4,2);     
+panelMulti      = inputLayer.data.Adv(5,2);
+outputType      = inputLayer.data.Adv(6,2); % 0 multi file 1- one file
+mySolveStep     = inputLayer.data.Adv(7,2);
+myDebug         = inputLayer.data.Adv(8,2);
+myDebugStep     = inputLayer.data.Adv(9,2);
+myZONK          = inputLayer.data.Adv(10,2);
+genType         = inputLayer.textdata.Adv(11,2);
 
-density     = 162;
-poisson     = 0.2;
-
-
-panelMulti  = 1;
-dBulk=1e9;
-dShear=1e8;
-dTens=1e9;
-dCoh=220;
-dFric=0;
-
-myDebug = 0;
-
-% brick, radtunnel
-%genType = 'radtunnel';
-genType = 'brick';
 
 if strcmp(genType,'radtunnel')
 layerMesh   =[10 4 10 4];    

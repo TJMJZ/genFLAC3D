@@ -6,6 +6,12 @@ load LayerDataFile
 load panelDataFile
 load initialDataFile
 
+if outputType == 0
+diary('./Output/gen.f3dat')
+else
+diary('./Output/single.f3dat')
+end
+
 % CREATE LAYERS
 disp(sprintf(' '));
 disp(sprintf(';>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> '));

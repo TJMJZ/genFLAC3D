@@ -1,8 +1,10 @@
-Output/
-*.xls
 *.mat
 *.m~
 *.asv
 *.swp
 myVimLog
 tags
+Output/*.f3dat
+Output/*.f3prj
+Output/*.f3fis
+Data/.DS_Store

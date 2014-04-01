@@ -2,6 +2,15 @@ function createExcavate()
     load initialDataFile.mat
     load LayerDataFile.mat
     load panelDataFile.mat
+    
+    if outputType == 0
+    diary('./Output/exc.f3dat') 
+    else
+    diary('./Output/single.f3dat')
+    end
+    
+    
+    
     nC = pillarInCol;
     nR = pillarInRow;
     numberOfPillar = nC * nR;

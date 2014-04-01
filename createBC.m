@@ -3,6 +3,14 @@ load initialDataFile.mat
 load LayerDataFile.mat
 load panelDataFile.mat
 
+
+if outputType == 0
+diary('./Output/BC.f3dat')
+else
+diary('./Output/single.f3dat')
+end
+
+
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';SET GRAVITY'));
 disp(sprintf(';----------------------------------'));

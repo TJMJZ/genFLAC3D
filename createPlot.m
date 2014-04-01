@@ -4,6 +4,13 @@ load LayerDataFile
 load panelDataFile
 load initialDataFile
 
+
+if outputType == 0
+diary('./Output/plots.f3dat')
+else
+diary('./Output/single.f3dat')
+end
+
 Z = coalLayerDepth - coalLayerThickness/2;
 disp(sprintf(';----------------------------------'));
 disp(sprintf(';CREATING HISTORY AND PLOT'));
