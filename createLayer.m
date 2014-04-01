@@ -1,10 +1,7 @@
 function createLayer()
 % other functions 
 % genLayer(layerDepth,layerThickness,panelX,panelY,panelMulti,layerMesh,layerRatio,layerName,layerNumber,genType)
-
-load LayerDataFile
-load panelDataFile
-load initialDataFile
+load inputDataFile.mat
 
 if outputType == 0
 diary('./Output/gen.f3dat')

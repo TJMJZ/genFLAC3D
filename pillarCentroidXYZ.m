@@ -1,8 +1,6 @@
 function C = pillarCentroidXYZ()
     %Gives the centroid coordination of pillars
-    load initialDataFile.mat
-    load LayerDataFile.mat
-    load panelDataFile.mat
+load inputDataFile.mat
     nC = pillarInCol;
     nR = pillarInRow;
     EH = coalLayerThickness;

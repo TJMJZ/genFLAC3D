@@ -1,6 +1,5 @@
 function createSolve(SOLVE)
-load InitialDataFile.mat
-
+load inputDataFile.mat
 
 if SOLVE == 1
     

@@ -112,20 +112,43 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 function pushGENERATE_Callback(hObject, eventdata, handles)
 % hObject    handle to pushGENERATE (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-get(handles.editPillarXSize,'String');
-get(handles.editPillarYSize,'String');
+% handles    structure with handles and user data (see GUIDATA) 
+if exist('inputDataFile.mat')
+        delete inputDataFile.mat
+end
 
-pillarInRow = get(handles.editPillarXNumber,'String');
-pillarInCol = get(handles.editPillarYNumber,'String');
-panelMulti  = get(handles.editPillarMulti,'String');
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% ADVANCE
+%%%%%%%%%%%%%%%%%%%%%%%
+pillarInRow = str2double(get(handles.editPillarXNumber,'String'));
+pillarInCol = str2double(get(handles.editPillarYNumber,'String'));
 density     = 162;
 poisson     = 0.2;
+panelMulti  = str2double(get(handles.editPillarMulti,'String'));
+
+if get(handles.radioOutput_Single,'value')
+   outputType = 1; %single file
+else
+   outputType = 0; %multi file
+end
+
+mySolveStep = str2double(get(handles.editSolve_Step,'string'));
 
 if get(handles.radioDebug_ON,'value')
     myDebug = 1;
 else
     myDebug = 0;
+end
+
+myDebugStep = str2double(get(handles.editDebug_Step,'string'));
+
+if get(handles.radioSolve_Zonk,'value');
+    myZONK =1;
+else
+    myZONK=0;
 end
 
 genType = 'brick';
@@ -134,7 +157,6 @@ genType = 'brick';
 if strcmp(genType,'radtunnel')
 layerMesh   =[10 4 10 4];    
 mainMesh    =[10 4 10 4];     
-
 layerRatio  = [1 1.2 1 1.2];       
 mainRatio   = [1 1.2 1 1.2];       
 elseif strcmp(genType,'brick')
@@ -143,21 +165,75 @@ mainMesh    =[10 10 3];
 layerRatio  = [1 1 1];       
 mainRatio   = [1 1 1];      
 end
-save('InitialDataFile','pillarInRow','pillarInCol','panelMulti','density','poisson','myDebug','genType','layerMesh','mainMesh','layerRatio','mainRatio');
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% PANEL SECTIOn
+%%%%%%%%%%%%%%%%%%%%%%%
 
 
-a=get(handles.editPanelEW,'String');
-a=get(handles.editPanelES,'String');
-a=get(handles.editPanelCS,'String');
+EC         = str2double(get(handles.editPanelES,'String')); %entry spacing
+XC         = str2double(get(handles.editPanelCS,'String')); %crosscut spacing
+EW         = str2double(get(handles.editPanelEW,'String')); %entry width
+pEW        = EC-EW; %pillar size in entry
+pCW        = XC-EW; %pillar size in crosscut
 
-a=get(handles.radioSolve_Solve,'value');
-a=get(handles.radioSolve_Zonk,'value');
-a=get(handles.radioSolve_Step,'value');
-a=get(handles.editSolve_Step,'string');
 
-a=get(handles.radioDebug_OFF,'value');
-a=get(handles.radioDebug_ON,'value');
-a=get(handles.editDebug_Step,'string');
+set(handles.editPillarXSize,'String',pEW);
+set(handles.editPillarYSize,'String',pCW);
+
+panelX      = pillarInRow*(EW + pEW)/2; 
+panelY      = pillarInCol*(EW + pCW)/2;
+panelMax    = max(panelX,panelY);
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% LAYERs
+%%%%%%%%%%%%%%%%%%%%%%%
+inputExcel = importdata('./Data/input.xls');
+
+lType       = inputExcel.data.Layers(:,1);     % 0 for main roof/floor 1 - rock layer 2 - rock layer
+lName       = inputExcel.textdata.Layers([2:end],2); %Layer name (coal must be present)
+lRockType   = inputExcel.textdata.Layers([2:end],3); %Rock type (sandstone, coal, etc)
+lThickness  = inputExcel.data.Layers(:,4);     %Layer thinkness (0 for main floor/roof and interface)
+lDepth      = inputExcel.data.Layers(:,5);     %Depth of top face of layer (must be negative)
+lMechType1  = inputExcel.textdata.Layers([2:end],6);%Mech Type -- (mohr,elas,null are currently valid)
+lMechType2  = inputExcel.textdata.Layers([2:end],7);%Mech Type -- (mohr,elas,null are currently valid)
+lPar1       = inputExcel.data.Layers(:,8);     %Bulk / KN
+lPar2       = inputExcel.data.Layers(:,9);     %Shear / KS
+lPar3       = inputExcel.data.Layers(:,10);     %Tens / tebs
+lPar4       = inputExcel.data.Layers(:,11);    % coh / coh
+lPar5       = inputExcel.data.Layers(:,12);    % fric / fric
+
+% FINDING COAL LAYAER
+for i=1:size(lName,1)
+   if strcmp(cell2mat(lName(i)),'coal')
+       coalLayerNumber = i;
+   end
+end
+
+coalLayerThickness = lThickness(coalLayerNumber);
+coalLayerDepth     = lDepth(coalLayerNumber);
+
+clearvars col row inputExcel i;
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+save('inputDataFile','EC', 'EW','XC', 'coalLayerDepth', 'coalLayerNumber',...
+    'coalLayerThickness', 'density', 'genType', 'lDepth', 'lMechType1',...
+    'lMechType2', 'lName', 'lPar1', 'lPar2', 'lPar3', 'lPar4', 'lPar5',...
+    'lRockType', 'lThickness', 'lType', 'layerMesh', 'layerRatio',...
+    'mainMesh', 'mainRatio', 'myDebug', 'myDebugStep', 'mySolveStep',...
+    'myZONK', 'outputType', 'pCW', 'pEW', 'panelMax', 'panelMulti',...
+    'panelX', 'panelY', 'pillarInCol', 'pillarInRow', 'poisson');
+
+genFLAC3D(0)
+
+
+
 
 
 

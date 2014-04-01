@@ -1,9 +1,6 @@
 function createPlot()
 
-load LayerDataFile
-load panelDataFile
-load initialDataFile
-
+load inputDataFile.mat
 
 if outputType == 0
 diary('./Output/plots.f3dat')
@@ -34,9 +31,7 @@ end
 
 function genPillarHistory()
 
-load LayerDataFile.mat;
-load InitialDataFile.mat;
-load panelDataFile.mat;
+load inputDataFile.mat
 
 numberOfPillars = pillarInCol * pillarInRow;
 

@@ -1,5 +1,5 @@
 function createResult(RESULT)
-load InitialDataFile.mat
+load inputDataFile.mat
 
 
 if RESULT ==1

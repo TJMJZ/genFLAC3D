@@ -1,7 +1,5 @@
 function createExcavate()
-    load initialDataFile.mat
-    load LayerDataFile.mat
-    load panelDataFile.mat
+load inputDataFile.mat
     
     if outputType == 0
     diary('./Output/exc.f3dat') 

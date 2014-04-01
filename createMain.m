@@ -1,10 +1,7 @@
 function createMain()
 %% Create main.f3dat
 % main.f3dat will call all the fiels for the project
-load PanelDataFile.mat
-load InitialDataFile.mat
-load LayerDataFile.mat
-
+load inputDataFile.mat
 
 if outputType == 0
 diary('./Output/main.f3dat')

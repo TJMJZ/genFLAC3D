@@ -1,8 +1,5 @@
 function createProperties(PROP)
-load LayerDataFile
-load panelDataFile
-load initialDataFile
-
+load inputDataFile.mat
 
 
 if lThickness(1) <= 0

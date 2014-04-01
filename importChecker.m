@@ -2,9 +2,7 @@ function numError = importChecker()
 numError = 0;
 % This function checks imported data and does not let program continue
 % if there is an input error present
-load LayerDataFile
-load panelDataFile
-load initialDataFile
+load inputDataFile.mat
 
 
 %check panelMulti input

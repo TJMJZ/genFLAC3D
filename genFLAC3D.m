@@ -1,14 +1,15 @@
-function  genFLAC3D()
+function  genFLAC3D(TYPE)
 % Single Pillar generator for FLAC3D
 % This code generates X x Y pillars in a development panel
 
-importInitial();                        % Initial Values
-load initialDataFile.mat
-importLayers();                         % imports layers data
-load layerDataFile.mat
-importPanel();                          % imports panel data
-load panelDataFile.mat
 
+if TYPE 
+    if exist('inputDataFile.mat')
+        delete inputDataFile.mat
+    end
+    importDataFile();                        % Initial Values
+end
+    
 numError = importChecker();
 
 if numError~=0
@@ -54,4 +55,6 @@ createProperties(2);                    %apply properties to layers after excava
 createSolve(2);                    %Second Solve
 createResult(2);                        %write results to table files
 
+
+%delete inputDataFile.mat
 diary off

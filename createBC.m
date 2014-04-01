@@ -1,7 +1,5 @@
 function createBC()
-load initialDataFile.mat
-load LayerDataFile.mat
-load panelDataFile.mat
+load inputDataFile.mat
 
 
 if outputType == 0
